@@ -14,5 +14,12 @@ zone "<%= @zone %>" {
 <% end -%>
   };
 <% end -%>  
+<% if !@also_notify.empty? -%>
+  also-notify {
+<% @also_notify.each do |ip| -%>
+  <%= ip %>;
+<% end -%>
+  };
+<% end -%>
 <% end -%>
 };
