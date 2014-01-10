@@ -5,7 +5,7 @@ zone "<%= @zone %>" {
 <% end -%>
   file "<%= @zone_file %>";
 <% if @zone_type == 'slave' -%>
-  masters { <%= @slave_masters %>;};
+ masters { <%= slave_masters.flatten.join(';') %>;};
 <% elsif @zone_type == 'master' -%>
 <% if @allow_transfer -%>
   allow-transfer {
