@@ -21,12 +21,34 @@ options {
     <% end -%>};
 <% end -%>
 
-	//========================================================================
-	// If BIND logs error messages about the root key being expired,
-	// you will need to update your keys.  See https://www.isc.org/bind-keys
-	//========================================================================
-	dnssec-validation auto;
+//========================================================================
+// If BIND logs error messages about the root key being expired,
+// you will need to update your keys.  See https://www.isc.org/bind-keys
+//========================================================================
+dnssec-validation auto;
 
-	auth-nxdomain no;    # conform to RFC1035
-	listen-on-v6 { any; };
+auth-nxdomain no;    # conform to RFC1035
+listen-on-v6 { any; };
 };
+
+
+logging {
+
+        channel query_logging {
+                file "/var/cache/bind/named_querylog"
+                versions 10 size 100M;
+                print-time yes;
+                severity debug 1;
+        };
+        category queries {
+                query_logging;
+        };
+
+        channel syslog_errors {
+                syslog user;
+                severity error;
+        };
+        category default { syslog_errors;  };
+        category lame-servers { null; };
+};
+
