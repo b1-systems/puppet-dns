@@ -21,6 +21,29 @@ options {
     <% end -%>};
 <% end -%>
 
+<% if allow_querys.size == 0 then -%>
+    // allow-query {
+        //      mynetwork;
+        // };
+<% else -%>
+   allow-query {
+   <% allow_querys.each do |entry| -%>
+      <%= entry -%>;
+   <% end -%>};
+<% end -%>
+
+<% if allow_querys_cache.size == 0 then -%>
+   // allow-query-cache {
+       //      mynetwork;
+       // };
+<% else -%>
+    allow-query-cache {
+    <% allow_querys_cache.each do |entry| -%>
+      <%= entry -%>;
+    <% end -%>};
+<% end -%>
+
+
 //========================================================================
 // If BIND logs error messages about the root key being expired,
 // you will need to update your keys.  See https://www.isc.org/bind-keys

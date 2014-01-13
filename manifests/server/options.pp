@@ -5,6 +5,10 @@
 # Parameters:
 #  $forwarders:
 #   Array of forwarders IP addresses. Default: empty
+#  $allow_querys:
+#   Array of access lists or IP addresses which is allowed to query DNS. Default: empty
+#  $allow_querys_cache:
+#   Array of access lists or IP addresses which is allowed to use query-cache. Default: empty
 # $group:
 #	Group of the file. Default: bind
 # $owner:
@@ -17,6 +21,8 @@
 #
 define dns::server::options (
   $forwarders = [],
+  $allow_querys       = [],
+  $allow_querys_cache = [],
 ) {
 
   include dns::server::params
