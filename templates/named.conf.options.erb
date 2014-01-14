@@ -44,6 +44,17 @@ options {
 <% end -%>
 
 
+<% if allow_recursion.size == 0 then -%>
+   // allow-recursion {
+       //      mynetwork;
+       // };
+<% else -%>
+    allow-recursion {
+    <% allow_recursion.each do |entry| -%>
+      <%= entry -%>;
+    <% end -%>};
+<% end -%>
+
 //========================================================================
 // If BIND logs error messages about the root key being expired,
 // you will need to update your keys.  See https://www.isc.org/bind-keys
