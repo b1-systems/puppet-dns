@@ -4,6 +4,13 @@ zone "<%= @zone %>" {
   notify <%= @zone_notify %>;
 <% end -%>
   file "<%= @zone_file %>";
+<% if !@allow_query.empty? -%>
+  allow-query {
+<% @allow_query.each do |ip| -%>
+  <%= ip %>;
+<% end -%>
+  };
+<% end -%>
 <% if @zone_type == 'slave' -%>
  masters { <%= slave_masters.flatten.join(';') %>;};
 <% elsif @zone_type == 'master' -%>
