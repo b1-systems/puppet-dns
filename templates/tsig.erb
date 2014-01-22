@@ -1,0 +1,9 @@
+key <%= @keyname %>. {
+  algorithm <%= @algorithm %>;
+  secret "<%= @secret %>";
+};
+<% if @server then -%>
+server <%= @server %> {
+  keys { <%= @keyname %>. ; };
+};
+<% end -%>

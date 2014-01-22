@@ -25,6 +25,14 @@ Tweak and add the following to your site manifest:
     node 'server.example.com' {
       include dns::server
 
+      # TSIG
+      dns::tsig { 'ns3' :
+        ensure    => present,
+        algorithm => "hmac-md5",
+        secret    => "La/E5CjG9O+os1jq0a2jdA==",
+        server    => "192.168.1.3"
+      }
+
       # Forwarders
       dns::server::options{ '/etc/bind/named.conf.options':
         forwarders => [ '8.8.8.8', '8.8.4.4' ]
