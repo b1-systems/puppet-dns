@@ -5,6 +5,9 @@
 # $ensure = ensure the persence or absence of the acl.
 # $keyname = the name given to the TSIG KEY. This must be unique. This defaults to
 #   the namevar.
+# $algorithm = Defined algorithm of the key (default: hmac-md5)
+# $server = related string or array of ip addresses to this key
+# $secret = shared secret of the key
 #
 # Usage:
 #
@@ -22,10 +25,7 @@ define dns::tsig (
   $ensure    = present
 ) {
 
-#  validate_string($name)
-#  validate_string($algorithm)
-#  validate_string($server)
-#  validate_string($secret)
+  validate_string($name)
 
   concat::fragment { "named.conf.local.tsig.${name}.include":
     ensure  => $ensure,
