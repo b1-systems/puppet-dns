@@ -1,14 +1,10 @@
-# == Define dns::record::dname
-#
-# Wrapper for dns::record to set a CNAME
-#
 define dns::record::cname (
   $zone,
   $data,
   $ttl = '',
   $host = $name) {
 
-  $alias = "${name},CNAME,${zone}"
+  $alias = "${host},CNAME,${zone}"
 
   $qualified_data = $data ? {
     '@'     => $data,

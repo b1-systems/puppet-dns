@@ -1,12 +1,4 @@
-# == Class dns::server
-#
-class dns::server::config (
-  $cfg_dir  = $dns::server::params::cfg_dir,
-  $cfg_file = $dns::server::params::cfg_file,
-  $data_dir = $dns::server::params::data_dir,
-  $owner    = $dns::server::params::owner,
-  $group    = $dns::server::params::group,
-) inherits dns::server::params {
+class dns::server::config inherits dns::server::params {
 
   file { $cfg_dir:
     ensure => directory,
@@ -14,14 +6,12 @@ class dns::server::config (
     group  => $group,
     mode   => '0755',
   }
-
-  file { $data_dir:
+  file { "${cfg_dir}/zones":
     ensure => directory,
     owner  => $owner,
     group  => $group,
     mode   => '0755',
   }
-
   file { "${cfg_dir}/bind.keys.d/":
     ensure => directory,
     owner  => $owner,
@@ -29,24 +19,21 @@ class dns::server::config (
     mode   => '0755',
   }
 
-  file { $cfg_file:
+  file { "${cfg_dir}/named.conf":
     ensure  => present,
     owner   => $owner,
     group   => $group,
     mode    => '0644',
-    content => template("${module_name}/named.conf.erb"),
-    require => [
-      File[$cfg_dir],
-      Class['dns::server::install']
-    ],
+    require => [File['/etc/bind'], Class['dns::server::install']],
     notify  => Class['dns::server::service'],
   }
 
   concat { "${cfg_dir}/named.conf.local":
-    owner  => $owner,
-    group  => $group,
-    mode   => '0644',
-    notify => Class['dns::server::service']
+    owner   => $owner,
+    group   => $group,
+    mode    => '0644',
+    require => Class['concat::setup'],
+    notify  => Class['dns::server::service']
   }
 
   concat::fragment{'named.conf.local.header':

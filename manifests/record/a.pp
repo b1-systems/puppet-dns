@@ -1,8 +1,3 @@
-# == Define dns::record::a
-#
-# Wrapper for dns::record to set an A record, optionally
-# also setting a PTR at the same time.
-#
 define dns::record::a (
   $zone,
   $data,
@@ -10,7 +5,7 @@ define dns::record::a (
   $ptr = false,
   $host = $name ) {
 
-  $alias = "${name},A,${zone}"
+  $alias = "${host},A,${zone}"
 
   dns::record { $alias:
     zone => $zone,
@@ -24,7 +19,7 @@ define dns::record::a (
     $reverse_zone = inline_template('<%= @ip.split(".")[0..-2].reverse.join(".") %>.IN-ADDR.ARPA')
     $octet = inline_template('<%= @ip.split(".")[-1] %>')
 
-    dns::record::ptr { "${octet}.${reverse_zone}":
+    dns::record::ptr { "${octet}${reverse_zone}":
       host => $octet,
       zone => $reverse_zone,
       data => "${host}.${zone}"
