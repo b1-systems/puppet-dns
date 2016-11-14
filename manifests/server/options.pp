@@ -125,6 +125,7 @@ define dns::server::options (
   $no_empty_zones = false,
   $notify_source = undef,
   $transfer_source = undef,
+  $query_log_enable = undef,
 ) {
   $valid_check_names = ['fail', 'warn', 'ignore']
   $cfg_dir = $::dns::server::params::cfg_dir
