@@ -89,6 +89,10 @@
 #   Default: undef, meaning the primary IP address of the DNS server,
 #   as determined by BIND.
 #
+# [*query_log_enable*]
+#   Controls extended query_log to /var/cache/bind
+#   Otherwise only syslog will used for errors and warnings
+#
 # [*transfer_source*]
 #   The source IP address from which to respond to transfer requests.
 #   Default: undef, meaning the primary IP address of the DNS server,
